@@ -35,7 +35,7 @@ def add():
     emp_image_file = request.files['emp_image_file']
 
     insert_sql = "INSERT INTO EMPLOYEE (EMP_NAME, EMP_EMAIL, EMP_CONTACT, EMP_POSITION, EMP_SALARY) VALUES (%s, %s, %s, %s, %s);"
-    emp_id = "SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'database_1' AND TABLE_NAME = 'EMPLOYEE';"
+    emp_id = "SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dblalatour' AND TABLE_NAME = 'EMPLOYEE';"
     cursor = db_conn.cursor()
 
     #if emp_image_file.filename == "":
