@@ -1,6 +1,6 @@
 customhost = "dblalatour.cmfilhh3xlf8.us-east-1.rds.amazonaws.com"
 customuser = "zerone"
 custompass = "qwer1234."
-customdb = "dblalatour"
+customdb = "employee"
 custombucket = "loozhihan-bucket"
 customregion = "us-east-1a"
