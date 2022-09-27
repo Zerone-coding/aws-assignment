@@ -1,5 +1,3 @@
-
-from turtle import update
 from flask import Flask, render_template, request
 from pymysql import connections
 import os
