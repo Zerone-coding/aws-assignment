@@ -1,1 +1,0 @@
-from empApp import app as application
