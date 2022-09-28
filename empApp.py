@@ -66,7 +66,7 @@ def add():
             # s3.Bucket(custombucket).put_object(Key=emp_image_file_name_in_s3, Body=emp_image_file)
             #s3.Bucket(custombucket).put_object(Key=emp_image_file_name_in_s3)
             
-            s3.client.upload_file(io.BufferedReader(emp_image_file).read(), custombucket, str(emp_id) + '.' + emp_image_file.filename.split('.')[1])
+            s3.meta.client.upload_file(io.BufferedReader(emp_image_file).read(), custombucket, str(emp_id) + '.' + emp_image_file.filename.split('.')[1])
             
             bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
             s3_location = (bucket_location['LocationConstraint']) 
