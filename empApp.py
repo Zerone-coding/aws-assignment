@@ -53,7 +53,7 @@ def add():
     #if emp_image_file.filename == "":
         # upload anonymous pic select a file"
     # emp_id = next_emp_id_sql
-
+    emp_image_file_name_in_s3 = emp_id
     try:
         cursor.execute(insert_sql, (emp_name, emp_email, emp_contact, emp_position, emp_salary))
         db_conn.commit()
@@ -62,8 +62,8 @@ def add():
             if emp_image_file.filename != '':
                 print("Data inserted in MySQL RDS... uploading image to S3...")
                 # s3.Bucket(custombucket).put_object(Key=emp_image_file_name_in_s3, Body=emp_image_file)
-                #s3.Bucket(custombucket).upload_file(Key=emp_image_file_name_in_s3)
-                s3.meta.client.upload_file(emp_image_file.filename, custombucket, str(emp_id)+'.'+ emp_image_file.filename.split('.')[1])
+                s3.Bucket(custombucket).upload_file(Key=emp_image_file_name_in_s3)
+                # s3.meta.client.upload_file(emp_image_file.filename, custombucket, str(emp_id)+'.'+ emp_image_file.filename.split('.')[1])
         except Exception as e:
             return str(e)  
 
