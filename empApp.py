@@ -1,3 +1,4 @@
+from email.mime import application
 from flask import Flask, render_template, request
 from pymysql import connections
 import os
@@ -5,7 +6,7 @@ import boto3
 from config import *
 from json import dumps
 
-app = Flask(__name__)
+application = Flask(__name__)
 
 bucket = custombucket
 region = customregion
@@ -20,12 +21,12 @@ db_conn = connections.Connection(
 )
 output = {}
 
-@app.route("/", methods=['GET', 'POST'])
+@application.route("/", methods=['GET', 'POST'])
 def home():
     return render_template('index.html')
 
 #add emp 
-@app.route('/addEmp', methods = ['POST'])
+@application.route('/addEmp', methods = ['POST'])
 def add():
     emp_name = request.form['emp_name']
     emp_email = request.form['emp_email']
@@ -80,7 +81,7 @@ def add():
     return render_template('index.html')
 
 #fetch emp
-@app.route('/fetchEmp', methods = ['POST'])
+@application.route('/fetchEmp', methods = ['POST'])
 def fetch():
     emp_id = request.form['emp_id']
 
@@ -104,7 +105,7 @@ def fetch():
 
    
 #update emp 
-@app.route('/updateEmp', methods = ['POST'])
+@application.route('/updateEmp', methods = ['POST'])
 def update():
     emp_id = request.form['emp_id']
     emp_name = request.form['emp_name']
@@ -160,7 +161,7 @@ def update():
 
 
 #update emp 
-@app.route('/removeEmp', methods = ['POST'])
+@application.route('/removeEmp', methods = ['POST'])
 def remove():
     emp_id = request.form['emp_id']
 
@@ -200,5 +201,5 @@ def remove():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
+    application.run(host='0.0.0.0', port=8080)
     
