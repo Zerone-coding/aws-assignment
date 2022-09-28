@@ -66,13 +66,8 @@ def add():
         s3 = boto3.resource('s3') 
         try:
             print("Data inserted in MySQL RDS... uploading image to S3...")
-            # s3.Bucket(custombucket).put_object(Key=emp_image_file_name_in_s3, Body=emp_image_file)
+            s3.Bucket(custombucket).put_object(Key=emp_image_file_name_in_s3, Body=emp_image_file)
             #s3.Bucket(custombucket).put_object(Key=emp_image_file_name_in_s3)
-
-            ## save upload file in temporary folder
-            emp_image_file.save(os.path.join(application.config['UPLOAD_FOLDER'], emp_image_file.filename))
-            
-            s3.meta.client.upload_file(str(os.path.join(application.config['UPLOAD_FOLDER'], emp_image_file.filename)), custombucket, str(emp_id))
             
             bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
             s3_location = (bucket_location['LocationConstraint']) 
@@ -109,11 +104,6 @@ def fetch():
             emp_position = row[3]
             emp_salary = row[4]
         cursor.close()
-
-        # get employee image from s3
-        for item in s3_client.list_objects(Bucket=custombucket)['Contents']:
-            if item['Key'] == emp_id:
-                image_url = s3_client.generate_presigned_url('get_object', Params = {'Bucket': custombucket, 'Key': item['Key']}, ExpiresIn = 100)
 
         return render_template('index.html', emp_id=emp_id, emp_name=emp_name, emp_email=emp_email, emp_contact=emp_contact, emp_position=emp_position, emp_salary=emp_salary, emp_image = image_url)
     except:
