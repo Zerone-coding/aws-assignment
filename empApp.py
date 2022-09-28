@@ -40,18 +40,19 @@ def add():
     cursor = db_conn.cursor()
 
     #fetch new employee id from database
-    emp_id = ''
-    try:
-        cursor.execute(next_emp_id_sql)
-        # get all records
-        records = cursor.fetchall()
-        for id in records:
-            emp_id = id[0]
-    except Exception as e:
-        return str(e)
+    # emp_id = ''
+    # try:
+    #     cursor.execute(next_emp_id_sql)
+    #     # get all records
+    #     records = cursor.fetchall()
+    #     for id in records:
+    #         emp_id = id[0]
+    # except Exception as e:
+    #     return str(e)
 
     #if emp_image_file.filename == "":
         # upload anonymous pic select a file"
+    emp_id = next_emp_id_sql
 
     try:
         cursor.execute(insert_sql, (emp_name, emp_email, emp_contact, emp_position, emp_salary))
