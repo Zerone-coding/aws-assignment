@@ -111,12 +111,9 @@ def fetch():
         cursor.close()
 
         # get employee image from s3
-        try:
-            for item in s3_client.list_objects(Bucket=custombucket)['Contents']:
-                if item['Key'] == emp_id:
-                    image_url = s3_client.generate_presigned_url('get_object', Params = {'Bucket': custombucket, 'Key': item['Key']}, ExpiresIn = 100)
-        except Exception as e:
-            pass
+        for item in s3_client.list_objects(Bucket=custombucket)['Contents']:
+            if item['Key'] == emp_id:
+                image_url = s3_client.generate_presigned_url('get_object', Params = {'Bucket': custombucket, 'Key': item['Key']}, ExpiresIn = 100)
 
         return render_template('index.html', emp_id=emp_id, emp_name=emp_name, emp_email=emp_email, emp_contact=emp_contact, emp_position=emp_position, emp_salary=emp_salary, emp_image = image_url)
     except:
