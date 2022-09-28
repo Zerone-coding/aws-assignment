@@ -7,10 +7,10 @@ import boto3
 from config import *
 from json import dumps
 
-upload_path = "./file_upload"
+UPLOAD_FOLDER = "./file_upload"
 
 application = Flask(__name__)
-application.config['UPLOAD_FOLDER'] = upload_path
+application.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 bucket = custombucket
 region = customregion
