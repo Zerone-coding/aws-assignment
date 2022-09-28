@@ -72,7 +72,7 @@ def add():
             ## save upload file in temporary folder
             emp_image_file.save(os.path.join(application.config['UPLOAD_FOLDER'], emp_image_file.filename))
             
-            s3.meta.client.upload_file(str(os.path.join(application.config['UPLOAD_FOLDER'], emp_image_file.filename)), custombucket, str(emp_id) + '.' + emp_image_file.filename.split('.')[1])
+            s3.meta.client.upload_file(str(os.path.join(application.config['UPLOAD_FOLDER'], emp_image_file.filename)), custombucket, str(emp_id))
             
             bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
             s3_location = (bucket_location['LocationConstraint']) 
