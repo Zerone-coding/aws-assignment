@@ -96,7 +96,7 @@ def add():
 @application.route('/fetchEmp', methods = ['POST'])
 def fetch():
     emp_id = request.form['emp_id']
-    s3_client = boto3.client('s3')
+
     try:
         select_sql = "SELECT EMP_NAME, EMP_EMAIL, EMP_CONTACT, EMP_POSITION, EMP_SALARY FROM EMPLOYEE WHERE EMP_ID = %s;"
         cursor = db_conn.cursor()
@@ -110,10 +110,24 @@ def fetch():
             emp_salary = row[4]
         cursor.close()
 
+        emp_image = fetchImg(emp_id)[0]
 
-        return render_template('index.html', emp_id=emp_id, emp_name=emp_name, emp_email=emp_email, emp_contact=emp_contact, emp_position=emp_position, emp_salary=emp_salary)
+        return render_template('index.html', emp_id=emp_id, emp_name=emp_name, emp_email=emp_email, emp_contact=emp_contact, emp_position=emp_position, emp_salary=emp_salary, emp_image=emp_image)
     except:
         return("ERROR :: EMPLOYEE NOT FOUND")
+
+
+def fetchImg(emp_id):
+    s3_client = boto3.client('s3')
+    public_urls = []
+    try:
+        for item in s3_client.list_objects(Bucket=bucket)['Contents']:
+            presigned_url = s3_client.generate_presigned_url('get_object', Params = {'Bucket': bucket, 'Key': item['Key']}, ExpiresIn = 100)
+            public_urls.append(presigned_url)
+    except Exception as e:
+        print("IMAGE ERROR")
+    # print("[INFO] : The contents inside show_image = ", public_urls)
+    return public_urls;
 
    
 #update emp 
