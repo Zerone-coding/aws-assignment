@@ -7,7 +7,7 @@ import boto3
 from config import *
 from json import dumps
 
-UPLOAD_FOLDER = "app/static/file_upload"
+UPLOAD_FOLDER = "./file_upload"
 
 application = Flask(__name__)
 application.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
